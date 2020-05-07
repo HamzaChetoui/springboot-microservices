@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store
+  labels:
+    app: store
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: store
+  template:
+    metadata:
+      labels:
+        app: store
+    spec:
+      containers:
+      - name: store
+        image: hchetoui/store:1.0
+        ports:
+        - containerPort: 8010
+        env:
+        - name: compute
+          valueFrom:
+            configMapKeyRef:
+              name: compute
+              key: compute-url
